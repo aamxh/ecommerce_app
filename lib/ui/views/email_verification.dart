@@ -1,0 +1,65 @@
+import 'package:ecommerce_app/ui/views/sign_in.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+class EmailVerificationV extends StatelessWidget {
+
+  const EmailVerificationV({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final theme = Theme.of(context);
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () => Get.offAll(() => SignInV()),
+          icon: const Icon(Icons.clear),
+        ),
+      ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+        child: Column(
+          children: [
+            SizedBox(height: size.height * 0.05,),
+            Image.asset(
+              'assets/images/email.png',
+              width: size.width * 0.8,
+            ),
+            SizedBox(height: size.height * 0.02,),
+            Text(
+              'Verify your email address',
+              textAlign: TextAlign.center,
+              style: theme.textTheme.titleMedium,
+            ),
+            SizedBox(height: size.height * 0.01,),
+            Text(
+              'A verification link was sent to your email address. Check the link to complete the sign up process.',
+              textAlign: TextAlign.center,
+              style: theme.textTheme.bodyLarge,
+            ),
+            SizedBox(height: size.height * 0.03,),
+            ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                fixedSize: Size(size.width * 0.5, size.height * 0.064),
+              ),
+              child: const Text('Continue'),
+            ),
+            SizedBox(height: size.height * 0.02,),
+            TextButton(
+              onPressed: () {},
+              child: Text(
+                'Resend email',
+                style: theme.textTheme.bodyLarge!.apply(
+                    color: theme.primaryColor,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+}
