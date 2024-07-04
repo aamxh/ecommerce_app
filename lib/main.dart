@@ -1,7 +1,9 @@
+import 'firebase_options.dart';
 import 'package:ecommerce_app/ui/views/on_boarding.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/config/theme/theme.dart';
 import 'package:get/get.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() {
   _initializeApp();
@@ -9,7 +11,9 @@ void main() {
 }
 
 Future<void> _initializeApp() async {
-
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 }
 
 class MyApp extends StatelessWidget {
