@@ -81,7 +81,6 @@ class SignUpV extends StatelessWidget {
                                 text: 'Terms of use ',
                                 style: theme.textTheme.bodyMedium!.apply(
                                     color: theme.primaryColor,
-                                    decoration: TextDecoration.underline
                                 ),
                               ),
                               TextSpan(
@@ -92,7 +91,6 @@ class SignUpV extends StatelessWidget {
                                 text: 'Privacy policy',
                                 style: theme.textTheme.bodyMedium!.apply(
                                     color: theme.primaryColor,
-                                    decoration: TextDecoration.underline
                                 ),
                               ),
                             ],

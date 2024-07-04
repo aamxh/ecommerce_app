@@ -100,6 +100,7 @@ class SignInV extends StatelessWidget {
                     'Already have an account?',
                     style: theme.textTheme.bodyMedium,
                   ),
+                  const SizedBox(width: 10),
                   GestureDetector(
                     onTap: () => Get.to(SignUpV()),
                     child: Text(

@@ -60,7 +60,7 @@ class HomeW extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: size.height * 0.01,),
-                    const SearchBar(),
+                    const SearchBar(isInHome: true),
                     SizedBox(height: size.height * 0.02,),
                     Align(
                       alignment: Alignment.centerLeft,
@@ -209,7 +209,9 @@ class HomeW extends StatelessWidget {
 
 class SearchBar extends StatelessWidget {
 
-  const SearchBar({super.key});
+  const SearchBar({super.key, required this.isInHome});
+
+  final bool isInHome;
 
   @override
   Widget build(BuildContext context) {
@@ -221,9 +223,8 @@ class SearchBar extends StatelessWidget {
           icon: const Icon(Icons.search, color: MyConstants.neutral,),
         ),
         filled: true,
-        fillColor: MyConstants.neutralLight,
+        fillColor: isInHome ? Colors.white : theme.scaffoldBackgroundColor,
         hintText: 'Search in store',
-        hintStyle: theme.inputDecorationTheme.helperStyle,
       ),
     );
   }
@@ -402,7 +403,7 @@ class StoreW extends StatelessWidget {
               ),
             ),
             SizedBox(height: size.height * 0.03),
-            const SearchBar(),
+            const SearchBar(isInHome: false,),
             SizedBox(height: size.height * 0.04,),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
@@ -445,6 +446,8 @@ class StoreW extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(
+                        theme.brightness == Brightness.dark ?
+                        MyBrands.darkBrandsLogos[idx] :
                         MyBrands.lightBrandsLogos[idx],
                         height: size.height * 0.07,
                         width: size.height * 0.07,
