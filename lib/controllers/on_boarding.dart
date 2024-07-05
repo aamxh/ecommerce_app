@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:ecommerce_app/ui/views/sign_in.dart';
+import 'package:get_storage/get_storage.dart';
 
 class OnBoardingC extends GetxController {
 
@@ -24,6 +25,10 @@ class OnBoardingC extends GetxController {
     }
   }
 
-  void skip() => Get.to(SignInV());
+  Future<void> skip() async {
+    final deviceStorage = GetStorage();
+    await deviceStorage.write('isFirstTime', false);
+    Get.offAll(() => SignInV());
+  }
 
 }

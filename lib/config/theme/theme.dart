@@ -16,7 +16,7 @@ class MyTheme {
     textTheme: MyTextTheme.dark,
     elevatedButtonTheme: myElevatedButtonTheme,
     appBarTheme: MyAppbarTheme.dark,
-    colorScheme: const ColorScheme.dark(secondary: MyConstants.neutralLight),
+    colorScheme: const ColorScheme.dark(secondary: Colors.white),
     inputDecorationTheme: myInputDecorationTheme,
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: Colors.black,
