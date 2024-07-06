@@ -1,7 +1,6 @@
-import 'package:ecommerce_app/config/authentication.dart';
-
+import 'package:ecommerce_app/config/network_manager.dart';
+import 'package:ecommerce_app/controllers/authentication.dart';
 import 'firebase_options.dart';
-import 'package:ecommerce_app/ui/views/on_boarding.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/config/theme/theme.dart';
 import 'package:get/get.dart';
@@ -17,6 +16,7 @@ void main() {
 Future<void> _initializeApp() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
+  Get.put(MyNetworkManager());
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform).then((FirebaseApp val) =>

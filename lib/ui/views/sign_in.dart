@@ -1,3 +1,5 @@
+import 'package:ecommerce_app/controllers/authentication.dart';
+import 'package:ecommerce_app/config/helpers.dart';
 import 'package:ecommerce_app/ui/views/password_reset.dart';
 import 'package:ecommerce_app/ui/views/sign_up.dart';
 import 'package:flutter/material.dart';
@@ -6,10 +8,7 @@ import 'package:get/get.dart';
 
 class SignInV extends StatelessWidget {
 
-  SignInV({super.key});
-
-  final _emailCtrl = TextEditingController();
-  final _passwordCtrl = TextEditingController();
+  const SignInV({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,22 +35,44 @@ class SignInV extends StatelessWidget {
               ),
               SizedBox(height: size.height * 0.03,),
               Form(
+                key: MyAuthentication.signInKey,
                 child: Column(
                   children: <Widget>[
                     TextFormField(
-                      controller: _emailCtrl,
-                      decoration: InputDecoration(
+                      controller: MyAuthentication.emailCtrl,
+                      decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.email_outlined),
                         labelText: 'Your email',
                       ),
+                      keyboardType: TextInputType.emailAddress,
+                      validator: MyHelpers.validateEmail,
                     ),
                     SizedBox(height: size.height * 0.02,),
-                    TextFormField(
-                      controller: _passwordCtrl,
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.lock_outline),
-                        labelText: 'Your password',
-                        suffixIcon: Icon(Icons.remove_red_eye_outlined),
+                    GetBuilder(
+                      init: MyAuthentication(),
+                      builder: (ctrl) => TextFormField(
+                        controller: MyAuthentication.passwordCtrl,
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.lock_outline),
+                          labelText: 'Your password',
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                              if (ctrl.isPasswordHidden) {
+                                ctrl.showPassword();
+                              } else {
+                                ctrl.hidePassword();
+                              }
+                            },
+                            child: Icon(
+                              Icons.remove_red_eye_outlined,
+                              color: ctrl.isPasswordHidden ?
+                              MyConstants.primaryColor :
+                              MyConstants.neutral,
+                            ),
+                          ),
+                        ),
+                        obscureText: ctrl.isPasswordHidden,
+                        validator: MyHelpers.validatePassword,
                       ),
                     ),
                     SizedBox(height: size.height * 0.01,),
@@ -60,9 +81,12 @@ class SignInV extends StatelessWidget {
                       children: <Widget>[
                         Row(
                           children: <Widget>[
-                            Checkbox(
-                              value: true,
-                              onChanged: (val) {},
+                            GetBuilder(
+                              init: MyAuthentication(),
+                              builder: (ctrl) => Checkbox(
+                                value: ctrl.rememberMe,
+                                onChanged: ctrl.changeRememberMe,
+                              ),
                             ),
                             Text(
                               'Remember me',
@@ -83,7 +107,7 @@ class SignInV extends StatelessWidget {
                     ),
                     SizedBox(height: size.height * 0.03,),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: Get.find<MyAuthentication>().signIn,
                       style: ElevatedButton.styleFrom(
                         fixedSize: Size(size.width * 0.5, size.height * 0.064),
                       ),
@@ -102,7 +126,11 @@ class SignInV extends StatelessWidget {
                   ),
                   const SizedBox(width: 10),
                   GestureDetector(
-                    onTap: () => Get.to(SignUpV()),
+                    onTap: () {
+                      MyAuthentication.emailCtrl.clear();
+                      MyAuthentication.passwordCtrl.clear();
+                      Get.to(const SignUpV());
+                    },
                     child: Text(
                       'Sign up',
                       style: theme.textTheme.bodyLarge!.apply(

@@ -300,7 +300,7 @@ class ProductW extends StatelessWidget {
                         Container() :
                         Container(
                           decoration: BoxDecoration(
-                            color: const Color(0xff9c4141),
+                            color: MyConstants.red,
                             borderRadius: BorderRadius.circular(30),
                           ),
                           padding: const EdgeInsets.symmetric(
