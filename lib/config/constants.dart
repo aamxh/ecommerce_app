@@ -11,7 +11,7 @@ class MyConstants {
   static const Color neutral = Colors.grey;
   static const Color neutralLight = Color(0xfff0f0f0);
   static const Color red = Color(0xff9c4141);
-
+  static const Color green = Color(0xff65a162);
 
   static const lightLogoP = 'assets/logos/logo_light.jpg';
   static const darkLogoP = 'assets/logos/logo_dark.jpg';

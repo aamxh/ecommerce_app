@@ -97,6 +97,19 @@ class MyHelpers {
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
         icon: const Icon(Icons.error_outline),
+        duration: const Duration(seconds: 5),
+      );
+
+  static void showSuccessSnackBar(String message) =>
+      Get.snackbar(
+        'Succeeded!',
+        message,
+        isDismissible: true,
+        backgroundColor: MyConstants.green,
+        colorText: Colors.white,
+        snackPosition: SnackPosition.BOTTOM,
+        icon: const Icon(Icons.done),
+        duration: const Duration(seconds: 5),
       );
 
 }

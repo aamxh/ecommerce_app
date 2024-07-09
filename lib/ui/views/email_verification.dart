@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/controllers/email_verification.dart';
 import 'package:ecommerce_app/ui/views/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,10 +11,11 @@ class EmailVerificationV extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
+    final ctrl = Get.put(EmailVerificationC());
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () => Get.offAll(() => SignInV()),
+          onPressed: () => Get.offAll(() => const SignInV()),
           icon: const Icon(Icons.clear),
         ),
       ),
@@ -40,7 +42,7 @@ class EmailVerificationV extends StatelessWidget {
             ),
             SizedBox(height: size.height * 0.03,),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () => ctrl.emailVerified,
               style: ElevatedButton.styleFrom(
                 fixedSize: Size(size.width * 0.5, size.height * 0.064),
               ),
@@ -48,7 +50,7 @@ class EmailVerificationV extends StatelessWidget {
             ),
             SizedBox(height: size.height * 0.02,),
             TextButton(
-              onPressed: () {},
+              onPressed: ctrl.resendEmail,
               child: Text(
                 'Resend email',
                 style: theme.textTheme.bodyLarge!.apply(

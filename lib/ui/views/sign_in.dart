@@ -160,7 +160,7 @@ class SignInV extends StatelessWidget {
                         width: 40,
                         height: 40,
                       ),
-                      onPressed: () {},
+                      onPressed: Get.find<MyAuthentication>().signInWithGoogle,
                     ),
                   ),
                   Container(
