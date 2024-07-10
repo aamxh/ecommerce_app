@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:ecommerce_app/config/constants.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:intl/intl.dart';
@@ -111,5 +112,15 @@ class MyHelpers {
         icon: const Icon(Icons.done),
         duration: const Duration(seconds: 5),
       );
+
+  static Future<bool> isConnected() async {
+    final connectivity = Connectivity();
+    final result = await connectivity.checkConnectivity();
+    if (result[0] == ConnectivityResult.none) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
 }

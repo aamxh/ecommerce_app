@@ -1,21 +1,34 @@
-import 'package:ecommerce_app/controllers/email_verification.dart';
+import 'package:ecommerce_app/config/authentication.dart';
 import 'package:ecommerce_app/ui/views/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class EmailVerificationV extends StatelessWidget {
+class EmailVerificationV extends StatefulWidget {
 
   const EmailVerificationV({super.key});
+
+  @override
+  State<EmailVerificationV> createState() => _EmailVerificationVS();
+}
+
+class _EmailVerificationVS extends State<EmailVerificationV> {
+
+  final _myAuth = MyAuthentication();
+
+  @override
+  void initState() {
+    super.initState();
+    _myAuth.sendEmailVerification();
+  }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
-    final ctrl = Get.put(EmailVerificationC());
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () => Get.offAll(() => const SignInV()),
+          onPressed: () => Get.offAll(() => SignInV()),
           icon: const Icon(Icons.clear),
         ),
       ),
@@ -42,7 +55,7 @@ class EmailVerificationV extends StatelessWidget {
             ),
             SizedBox(height: size.height * 0.03,),
             ElevatedButton(
-              onPressed: () => ctrl.emailVerified,
+              onPressed: _myAuth.emailVerified,
               style: ElevatedButton.styleFrom(
                 fixedSize: Size(size.width * 0.5, size.height * 0.064),
               ),
@@ -50,7 +63,7 @@ class EmailVerificationV extends StatelessWidget {
             ),
             SizedBox(height: size.height * 0.02,),
             TextButton(
-              onPressed: ctrl.resendEmail,
+              onPressed: _myAuth.sendEmailVerification,
               child: Text(
                 'Resend email',
                 style: theme.textTheme.bodyLarge!.apply(
@@ -63,5 +76,4 @@ class EmailVerificationV extends StatelessWidget {
       ),
     );
   }
-
 }

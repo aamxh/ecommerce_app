@@ -1,13 +1,17 @@
 import 'package:ecommerce_app/config/constants.dart';
 import 'package:ecommerce_app/config/helpers.dart';
+import 'package:ecommerce_app/config/authentication.dart';
 import 'package:ecommerce_app/controllers/authentication.dart';
+import 'package:ecommerce_app/ui/views/done.dart';
 import 'package:ecommerce_app/ui/views/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SignUpV extends StatelessWidget {
 
-  const SignUpV({super.key});
+  SignUpV({super.key});
+
+  final _myAuth = MyAuthentication();
 
   @override
   Widget build(BuildContext context) {
@@ -73,8 +77,8 @@ class SignUpV extends StatelessWidget {
                       validator: MyHelpers.validatePhone,
                     ),
                     SizedBox(height: size.height * 0.02,),
-                    GetBuilder<MyAuthentication>(
-                      init: MyAuthentication(),
+                    GetBuilder<AuthenticationC>(
+                      init: AuthenticationC(),
                       builder: (ctrl) => TextFormField(
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.lock_outline),
@@ -105,10 +109,10 @@ class SignUpV extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         GetBuilder(
-                          init: MyAuthentication(),
+                          init: AuthenticationC(),
                           builder: (ctrl) => Checkbox(
                             value: ctrl.accepted,
-                            onChanged: ctrl.changeAccepted,
+                            onChanged: (val) => ctrl.changeAccepted(val!),
                           ),
                         ),
                         RichText(
@@ -170,7 +174,12 @@ class SignUpV extends StatelessWidget {
                         width: 40,
                         height: 40,
                       ),
-                      onPressed: () {},
+                      onPressed: () async {
+                        final result = await _myAuth.signInWithGoogle();
+                        if (result) {
+                          Get.offAll(() => const DoneV());
+                        }
+                      },
                     ),
                   ),
                   Container(

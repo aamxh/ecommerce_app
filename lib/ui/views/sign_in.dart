@@ -1,5 +1,7 @@
-import 'package:ecommerce_app/controllers/authentication.dart';
+import 'package:ecommerce_app/config/authentication.dart';
 import 'package:ecommerce_app/config/helpers.dart';
+import 'package:ecommerce_app/controllers/authentication.dart';
+import 'package:ecommerce_app/ui/views/main.dart';
 import 'package:ecommerce_app/ui/views/password_reset.dart';
 import 'package:ecommerce_app/ui/views/sign_up.dart';
 import 'package:flutter/material.dart';
@@ -8,12 +10,15 @@ import 'package:get/get.dart';
 
 class SignInV extends StatelessWidget {
 
-  const SignInV({super.key});
+  SignInV({super.key});
+
+  final _myAuth = MyAuthentication();
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
+    Get.put(MyAuthentication());
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -49,7 +54,7 @@ class SignInV extends StatelessWidget {
                     ),
                     SizedBox(height: size.height * 0.02,),
                     GetBuilder(
-                      init: MyAuthentication(),
+                      init: AuthenticationC(),
                       builder: (ctrl) => TextFormField(
                         controller: MyAuthentication.passwordCtrl,
                         decoration: InputDecoration(
@@ -82,10 +87,10 @@ class SignInV extends StatelessWidget {
                         Row(
                           children: <Widget>[
                             GetBuilder(
-                              init: MyAuthentication(),
+                              init: AuthenticationC(),
                               builder: (ctrl) => Checkbox(
                                 value: ctrl.rememberMe,
-                                onChanged: ctrl.changeRememberMe,
+                                onChanged: (val) => ctrl.changeRememberMe(val!),
                               ),
                             ),
                             Text(
@@ -129,7 +134,7 @@ class SignInV extends StatelessWidget {
                     onTap: () {
                       MyAuthentication.emailCtrl.clear();
                       MyAuthentication.passwordCtrl.clear();
-                      Get.to(const SignUpV());
+                      Get.to(SignUpV());
                     },
                     child: Text(
                       'Sign up',
@@ -160,7 +165,12 @@ class SignInV extends StatelessWidget {
                         width: 40,
                         height: 40,
                       ),
-                      onPressed: Get.find<MyAuthentication>().signInWithGoogle,
+                      onPressed: () async {
+                        final result = await _myAuth.signInWithGoogle();
+                        if (result) {
+                          Get.offAll(() => const MainV());
+                        }
+                      },
                     ),
                   ),
                   Container(

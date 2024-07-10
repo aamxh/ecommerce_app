@@ -1,13 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_app/config/helpers.dart';
-import 'package:get/get.dart';
 import 'package:ecommerce_app/models/user.dart';
 
-class MyCloudFirestore extends GetxController {
+class MyCloudDB {
 
   final _db = FirebaseFirestore.instance;
 
-  Future<void> addUser(MyUser user) async {
+  Future<void> addUser(UserM user) async {
     try {
       await _db.collection('users').doc(user.id).set(user.toJson());
     } catch (ex) {

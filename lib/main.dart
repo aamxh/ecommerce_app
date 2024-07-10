@@ -1,4 +1,3 @@
-import 'package:ecommerce_app/config/network_manager.dart';
 import 'package:ecommerce_app/controllers/authentication.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
@@ -16,11 +15,9 @@ void main() {
 Future<void> _initializeApp() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
-  Get.put(MyNetworkManager());
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform).then((FirebaseApp val) =>
-      Get.put(MyAuthentication()));
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
+      .then((FirebaseApp val) => Get.put(AuthenticationC()));
 }
 
 class MyApp extends StatelessWidget {
