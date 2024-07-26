@@ -110,7 +110,7 @@ class MyAuthentication {
     if (user == null) return;
     await user.reload();
     if (user.emailVerified == true) {
-      Get.offAll(const MainV());
+      Get.offAll(() => const MainV());
     }
   }
 
@@ -138,9 +138,7 @@ class MyAuthentication {
         MyHelpers.stopLoading();
         return true;
       }
-      final isAlreadyStored = await _myDB.isEmailAlreadyUsed(
-          user.email ?? '',
-      );
+      final isAlreadyStored = await _myDB.isEmailAlreadyUsed(user.email ?? '');
       if (isAlreadyStored) {
         MyHelpers.stopLoading();
         return true;
@@ -158,6 +156,18 @@ class MyAuthentication {
       MyHelpers.showErrorSnackBar(ex.toString());
       MyHelpers.stopLoading();
       return false;
+    }
+  }
+
+  Future<void> forgotPassword() async {
+    try {
+      MyHelpers.startLoading();
+      await _auth.sendPasswordResetEmail(email: emailCtrl.text.trim());
+      MyHelpers.stopLoading();
+      MyHelpers.showSuccessSnackBar('A password reset email was sent successfully!');
+    } catch(ex) {
+      MyHelpers.showErrorSnackBar(ex.toString());
+      MyHelpers.stopLoading();
     }
   }
 

@@ -53,7 +53,7 @@ class HomeW extends StatelessWidget {
                         GestureDetector(
                           onTap: () {},
                           child: Icon(
-                            Icons.notifications,
+                            Icons.shopping_cart_rounded,
                             color: Colors.white,
                           ),
                         ),
@@ -385,7 +385,7 @@ class StoreW extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
         child: Column(
           children: [
-            SizedBox(height: size.height * 0.08,),
+            SizedBox(height: size.height * 0.06,),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
               child: Row(
@@ -397,7 +397,7 @@ class StoreW extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {},
-                    child: Icon(Icons.notifications),
+                    child: Icon(Icons.shopping_cart_rounded),
                   ),
                 ],
               ),
@@ -429,7 +429,7 @@ class StoreW extends StatelessWidget {
             GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                mainAxisExtent: size.height * 0.15,
+                mainAxisExtent: size.height * 0.13,
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 10,
               ),
@@ -442,48 +442,164 @@ class StoreW extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(color: MyConstants.neutral),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        theme.brightness == Brightness.dark ?
-                        MyBrands.darkBrandsLogos[idx] :
-                        MyBrands.lightBrandsLogos[idx],
-                        height: size.height * 0.07,
-                        width: size.height * 0.07,
-                      ),
-                      SizedBox(width: size.width * 0.02,),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                MyBrands.brands[idx],
-                                style: theme.textTheme.bodyLarge,
-                              ),
-                              const SizedBox(width: 5,),
-                              Image.asset(
-                                'assets/logos/verified.png',
-                                height: size.height * 0.018,
-                                width: size.height * 0.018,
-                              ),
-                            ],
-                          ),
-                          Text(
-                            '+30 products',
-                            style: theme.textTheme.bodySmall,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                  child: BrandW(idx: idx),
                 );
               },
             ),
+            SizedBox(height: size.height * 0.04,),
+            GetBuilder<TabBarC>(
+              init: TabBarC(),
+              builder: (ctrl) => Column(
+                children: [
+                  SizedBox(
+                    height: size.height * 0.05,
+                    child: ListView.builder(
+                      itemCount: 6,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, idx) {
+                        return Padding(
+                          padding: idx == 5 ?
+                          EdgeInsets.zero :
+                          EdgeInsets.only(right: size.width * 0.05),
+                          child: GestureDetector(
+                            onTap: () => ctrl.changeIdx(idx),
+                            child: Text(
+                              MyPopularCategories.names[idx],
+                              style: ctrl.idx == idx ? theme.textTheme.bodyLarge!
+                                  .apply(color: theme.primaryColor) :
+                              theme.textTheme.bodyLarge,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  SizedBox(height: size.height * 0.01,),
+                  SizedBox(
+                    height: size.height * 0.5,
+                    child: ctrl.categories[ctrl.idx],
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
+      ),
+    );
+  }
+
+}
+
+class BrandW extends StatelessWidget {
+
+  const BrandW({super.key, required this.idx});
+
+  final int idx;
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final theme = Theme.of(context);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.asset(
+          theme.brightness == Brightness.dark ?
+          MyBrands.darkBrandsLogos[idx] :
+          MyBrands.lightBrandsLogos[idx],
+          height: size.height * 0.07,
+          width: size.height * 0.07,
+        ),
+        SizedBox(width: size.width * 0.02,),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  MyBrands.brands[idx],
+                  style: theme.textTheme.bodyLarge,
+                ),
+                const SizedBox(width: 5,),
+                Image.asset(
+                  'assets/logos/verified.png',
+                  height: size.height * 0.018,
+                  width: size.height * 0.018,
+                ),
+              ],
+            ),
+            Text(
+              '+30 products',
+              style: theme.textTheme.bodySmall,
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+}
+
+class Brand2W extends StatelessWidget {
+
+  const Brand2W({super.key, required this.idx});
+
+  final int idx;
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final theme = Theme.of(context);
+    return Container(
+      height: size.height * 0.2,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: MyConstants.neutral),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                theme.brightness == Brightness.dark ?
+                MyBrands.darkBrandsLogos[idx] :
+                MyBrands.lightBrandsLogos[idx],
+                height: size.height * 0.07,
+                width: size.height * 0.07,
+              ),
+              SizedBox(width: size.width * 0.02,),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        MyBrands.brands[idx],
+                        style: theme.textTheme.bodyLarge,
+                      ),
+                      const SizedBox(width: 5,),
+                      Image.asset(
+                        'assets/logos/verified.png',
+                        height: size.height * 0.018,
+                        width: size.height * 0.018,
+                      ),
+                    ],
+                  ),
+                  Text(
+                    '+30 products',
+                    style: theme.textTheme.bodySmall,
+                  ),
+                ],
+              ),
+            ],
+          ),
+
+        ],
       ),
     );
   }
